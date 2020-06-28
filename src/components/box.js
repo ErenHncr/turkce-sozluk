@@ -1,13 +1,14 @@
-import { View } from 'react-native';
-import styled from 'styled-components';
+import { View } from 'react-native'
+import styled from 'styled-components'
 import {
   compose,
   color,
   size,
   space,
+  border,
   flexbox,
   borderRadius
-} from 'styled-system';
+} from 'styled-system'
 
 const Box = styled(View)(
   compose(
@@ -15,8 +16,9 @@ const Box = styled(View)(
     space,
     color,
     size,
+    border,
     borderRadius
   )
-);
+)
 
-export default Box;
+export default Box

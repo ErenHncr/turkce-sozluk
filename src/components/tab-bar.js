@@ -22,7 +22,8 @@ function TabBar({ state, descriptors, navigation }) {
         flexDirection: 'row',
         shadowColor: '#000',
         shadowOpacity: 0.1,
-        shadowRadius: 20
+        shadowRadius: 20,
+        elevation: 10
       }}
     >
       {state.routes.map((route, index) => {

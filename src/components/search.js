@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Text, Keyboard } from 'react-native'
 import Box from './box'
 import Input from './input'
@@ -9,23 +9,10 @@ import theme from '../utils/theme'
 function SearchBox({ onChangeFocus }) {
   const [value, setValue] = React.useState('')
   const [isFocus, setFocus] = React.useState(false)
-
-  useEffect(() => {
-    Keyboard.addListener('keyboardDidShow', keyboardDidShow)
-    Keyboard.addListener('keyboardDidHide', keyboardDidHide)
-    return () => {
-      Keyboard.removeListener('keyboardDidShow', keyboardDidShow)
-      Keyboard.removeListener('keyboardDidHide', keyboardDidHide)
-    }
-  }, [isFocus])
-
-  const keyboardDidShow = () => {
-    onChangeFocus(true)
-  }
-
-  const keyboardDidHide = () => {
-    onChangeFocus(false)
-  }
+  // Change focus state
+  React.useEffect(() => {
+    onChangeFocus(isFocus)
+  }, [isFocus, onChangeFocus])
 
   const onCancel = () => {
     setFocus(false)
@@ -73,7 +60,7 @@ function SearchBox({ onChangeFocus }) {
         </Button>
       </Box>
       {isFocus && (
-        <Button zIndex={5} onPress={onCancel} px={15} height={52}>
+        <Button px={15} height={52} onPress={onCancel}>
           <Text>Vazgeç</Text>
         </Button>
       )}
