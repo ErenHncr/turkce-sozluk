@@ -20,7 +20,7 @@ function SearchView({ navigation }) {
   const [searched, setSearched] = React.useState([])
 
   const getSearched = async () => {
-    await AsyncStorage.getItem('searched').then((res) => {
+    await AsyncStorage.getItem('searched').then(res => {
       if (res != undefined) setSearched(JSON.parse(res))
     })
   }
@@ -32,8 +32,8 @@ function SearchView({ navigation }) {
       // command should be used
       try {
         await fetch('https://sozluk.gov.tr/icerik')
-          .then((response) => response.json())
-          .then((data) => {
+          .then(response => response.json())
+          .then(data => {
             setHomeData({
               atasoz: data.atasoz[0],
               kelime: data.kelime[0]
@@ -44,7 +44,7 @@ function SearchView({ navigation }) {
       }
     }
     getHomeData()
-  }, [setSearched])
+  }, [searched, setSearched])
 
   // Change statusbar colors
   useFocusEffect(
@@ -71,6 +71,7 @@ function SearchView({ navigation }) {
         {isSearchFocus ? (
           <Box>
             <SearchHistoryList
+              title='Son Aramalar'
               navigation={navigation}
               data={searched.reverse()}
             />
