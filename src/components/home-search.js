@@ -6,7 +6,12 @@ import Search from './search'
 import { Logo } from './icons'
 
 const HEROHEIGHT = 230
-function HomeSearch({ isSearchFocus, onSearchFocus }) {
+function HomeSearch({
+  navigation,
+  isSearchFocus,
+  onSearchFocus,
+  onSubmitEditing
+}) {
   const [bgOpacity] = React.useState(new Animated.Value(1))
   const [heroHeight] = React.useState(new Animated.Value(HEROHEIGHT))
 
@@ -65,7 +70,11 @@ function HomeSearch({ isSearchFocus, onSearchFocus }) {
         p={16}
         width='100%'
       >
-        <Search onChangeFocus={status => onSearchFocus(status)} />
+        <Search
+          onSubmitEditing={onSubmitEditing}
+          navigation={navigation}
+          onChangeFocus={status => onSearchFocus(status)}
+        />
       </Box>
     </Box>
   )

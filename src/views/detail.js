@@ -5,11 +5,7 @@ import { useFocusEffect } from '@react-navigation/native'
 
 import Box from '../components/box'
 import Text from '../components/text'
-import {
-  DetailSummaryItemContainer,
-  DetailSummaryItemTitle,
-  DetailSummaryItemSummary
-} from '../components/detail-summary-item'
+import DetailSummaryItem from '../components/detail-summary-item'
 import theme from '../utils/theme'
 import {
   Sound,
@@ -23,8 +19,8 @@ import ActionButton, { ActionButtonTitle } from '../components/action-button'
 import LoaderText from '../components/LoaderText'
 
 function DetailView({ route }) {
-  //const keyword = route.params?.keyword
-  const keyword = 'ana'
+  const keyword = route.params?.keyword
+
   const [data, setData] = React.useState(null)
 
   useFocusEffect(
@@ -44,7 +40,6 @@ function DetailView({ route }) {
         .then(response => response.json())
         .then(data => {
           setData(data[0])
-          console.log(data[0].anlamlarListe[0].orneklerListe[0].ornek)
         })
     } catch (error) {
       console.log(error)
@@ -81,24 +76,17 @@ function DetailView({ route }) {
         <Box mt={32}>
           {!data
             ? [1, 2, 3].map(index => (
-                <DetailSummaryItemContainer key={index} border={index !== 1}>
+                <DetailSummaryItem key={index} border={index !== 1}>
                   <LoaderText />
                   <LoaderText width={200} mt={10} />
-                </DetailSummaryItemContainer>
+                </DetailSummaryItem>
               ))
             : data.anlamlarListe.map(item => (
-                <DetailSummaryItemContainer
+                <DetailSummaryItem
                   key={item.anlam}
-                  order='1'
-                  type={item?.ozelliklerListe?.map(item => item.tam_adi)}
-                >
-                  <DetailSummaryItemTitle>{item.anlam}</DetailSummaryItemTitle>
-                  {item?.orneklerListe && (
-                    <DetailSummaryItemSummary>
-                      {item.orneklerListe[0].ornek}
-                    </DetailSummaryItemSummary>
-                  )}
-                </DetailSummaryItemContainer>
+                  data={item}
+                  border={item.anlam_sira !== 1}
+                />
               ))}
           {/* - */}
         </Box>

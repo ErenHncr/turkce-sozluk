@@ -5,7 +5,7 @@ import Box from './box'
 import Text from './text'
 import { SimpleCardContainer, SimpleCardTitle } from './simple-card'
 
-function SearchHistoryList({ data }) {
+function SearchHistoryList({ navigation, data }) {
   return (
     <FlatList
       style={{ padding: 16 }}
@@ -16,11 +16,18 @@ function SearchHistoryList({ data }) {
         </Text>
       }
       data={data}
-      keyExtractor={item => item.id}
-      renderItem={({ item }) => (
-        <Box py={6} px={0} key={item.id}>
-          <SimpleCardContainer>
-            <SimpleCardTitle>{item.title}</SimpleCardTitle>
+      keyExtractor={item => item}
+      renderItem={({ item, index }) => (
+        <Box py={6} px={0} key={index}>
+          <SimpleCardContainer
+            onPress={() =>
+              navigation.navigate('Detail', {
+                title: 'Detay',
+                keyword: item
+              })
+            }
+          >
+            <SimpleCardTitle>{item}</SimpleCardTitle>
           </SimpleCardContainer>
         </Box>
       )}

@@ -5,10 +5,13 @@ import Input from './input'
 import { Search, Close } from './icons'
 import Button from './button'
 import theme from '../utils/theme'
+// Storage
+import AsyncStorage from '@react-native-community/async-storage'
 
-function SearchBox({ onChangeFocus }) {
+function SearchBox({ navigation, onChangeFocus, onSubmitEditing }) {
   const [value, setValue] = React.useState('')
   const [isFocus, setFocus] = React.useState(false)
+
   // Change focus state
   React.useEffect(() => {
     onChangeFocus(isFocus)
@@ -22,6 +25,38 @@ function SearchBox({ onChangeFocus }) {
 
   const onClear = () => {
     setValue('')
+  }
+
+  const onSubmitEnd = text => {
+    storeSearched(text)
+
+    navigation.navigate('Detail', {
+      title: 'Detay',
+      keyword: text
+    })
+  }
+
+  const storeSearched = async value => {
+    //await AsyncStorage.setItem('searched', JSON.stringify([]))
+    try {
+      const oldSearched = await AsyncStorage.getItem('searched')
+      if (oldSearched == undefined) {
+        await AsyncStorage.setItem('searched', JSON.stringify([value]))
+      } else {
+        const merged = JSON.parse(oldSearched).concat(value)
+        if (merged.length > 5) {
+          merged.shift()
+        }
+        await AsyncStorage.setItem('searched', JSON.stringify(merged)).then(
+          () => {
+            // come from searchView
+            onSubmitEditing()
+          }
+        )
+      }
+    } catch (e) {
+      // saving error
+    }
   }
 
   return (
@@ -48,6 +83,9 @@ function SearchBox({ onChangeFocus }) {
             setFocus(true)
           }}
           onChangeText={text => setValue(text)}
+          onSubmitEditing={event => {
+            onSubmitEnd(event.nativeEvent.text)
+          }}
         />
         {value.length > 0 && (
           <Button onPress={onClear} position='absolute' right={16} top={14}>

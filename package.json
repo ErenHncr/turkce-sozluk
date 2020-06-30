@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android --port=8088",
+    "android": "npx react-native run-android --port=8088",
     "ios": "react-native run-ios",
     "start": "npx react-native start --port=8088",
     "test": "jest",
@@ -11,6 +11,7 @@
     "svgr": "svgr ./src/icons -d ./src/components/icons --native --svg-props className= --svgo-config .svgorc.json"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.11.0",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.6.0",
     "@react-navigation/native": "^5.6.0",
@@ -27,7 +28,7 @@
     "styled-system": "^5.1.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.2",
+    "@babel/core": "^7.10.3",
     "@babel/plugin-proposal-optional-chaining": "^7.10.3",
     "@babel/runtime": "^7.6.2",
     "@react-native-community/eslint-config": "^0.0.5",
@@ -37,6 +38,7 @@
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.58.0",
+    "path": "^0.12.7",
     "react-test-renderer": "16.11.0"
   },
   "jest": {
